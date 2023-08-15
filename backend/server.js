@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "codespace_1",
+  database: "codespace",
 });
 
 app.use(cors());
@@ -32,7 +32,7 @@ app.post('/create-transaction', async (req, res) => {
       secure: true
     },
     customer_details: {
-      email : userEmail,
+      email : 'test@gmail.com',
     }
   };
 
@@ -67,6 +67,16 @@ app.post('/login', (req, res) => {
     (error, results) => {
       if (error || results.length === 0) res.send({ error: 'Invalid credentials' });
       else res.send({ message: 'Logged in!', userEmail: email });
+    }
+  );
+});
+
+app.get('/product', (req, res) => {
+  connection.query(
+    'SELECT * FROM product',
+    (error, results) => {
+      if (error || results.length === 0) res.send({ error: 'Data not found!' });
+      else res.send(results);
     }
   );
 });
